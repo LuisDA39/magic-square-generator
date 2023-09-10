@@ -4,30 +4,29 @@
 using namespace std;
 
 vector<vector<int>> generarCuadro(int n, char m) {
-    vector<vector<int>> square(n, vector<int>(n, 0));
-    // Fill the magic square
-    int row = 0;
+    vector<vector<int>> cuadro(n, vector<int>(n, 0));
+    // Llenado del cuadro magico
+    int fila = 0;
     int col = n / 2;
-
     int x;
 
     switch(m) {
         case 'c':
             for (int i = 1; i < 1 + n * n; i++) {
-                square[row][col] = i;
-                row--;
+                cuadro[fila][col] = i;
+                fila--;
                 col++;
 
-                if (row < 0)
-                    row = n - 1;
+                if (fila < 0)
+                    fila = n - 1;
                 if (col == n)
                     col = 0;
 
-                if (square[row][col] != 0) {
-                    row += 2;
+                if (cuadro[fila][col] != 0) {
+                    fila += 2;
                     col--;
-                    if (row >= n)
-                        row -= n;
+                    if (fila >= n)
+                        fila -= n;
                     if (col < 0)
                         col = n - 1;
                 }
@@ -36,20 +35,20 @@ vector<vector<int>> generarCuadro(int n, char m) {
 
         case 'p':
             for (int i = 1; i < 1 + n * n; i++) {
-                square[row][col] = 2 * i;
-                row--;
+                cuadro[fila][col] = 2 * i;
+                fila--;
                 col++;
 
-                if (row < 0)
-                    row = n - 1;
+                if (fila < 0)
+                    fila = n - 1;
                 if (col == n)
                     col = 0;
 
-                if (square[row][col] != 0) {
-                    row += 2;
+                if (cuadro[fila][col] != 0) {
+                    fila += 2;
                     col--;
-                    if (row >= n)
-                        row -= n;
+                    if (fila >= n)
+                        fila -= n;
                     if (col < 0)
                         col = n - 1;
                 }
@@ -58,21 +57,21 @@ vector<vector<int>> generarCuadro(int n, char m) {
 
         case 'i':
             for (int i = 1; i < 2*(n * n); i += 2) {
-                square[row][col] = i;
+                cuadro[fila][col] = i;
 
-                row--;
+                fila--;
                 col++;
 
-                if (row < 0)
-                    row = n - 1;
+                if (fila < 0)
+                    fila = n - 1;
                 if (col == n)
                     col = 0;
 
-                if (square[row][col] != 0) {
-                    row += 2;
+                if (cuadro[fila][col] != 0) {
+                    fila += 2;
                     col--;
-                    if (row >= n)
-                        row -= n;
+                    if (fila >= n)
+                        fila -= n;
                     if (col < 0)
                         col = n - 1;
                 }
@@ -80,23 +79,24 @@ vector<vector<int>> generarCuadro(int n, char m) {
             break;
 
         case 'm':
+            cout << "Ingresa un entero x" << endl;
             cin >> x;
 
             for (int i = 1; i < 1 + n * n; i++) {
-                square[row][col] = i * x;
-                row--;
+                cuadro[fila][col] = i * x;
+                fila--;
                 col++;
 
-                if (row < 0)
-                    row = n - 1;
+                if (fila < 0)
+                    fila = n - 1;
                 if (col == n)
                     col = 0;
 
-                if (square[row][col] != 0) {
-                    row += 2;
+                if (cuadro[fila][col] != 0) {
+                    fila += 2;
                     col--;
-                    if (row >= n)
-                        row -= n;
+                    if (fila >= n)
+                        fila -= n;
                     if (col < 0)
                         col = n - 1;
                 }
@@ -107,54 +107,60 @@ vector<vector<int>> generarCuadro(int n, char m) {
 
             break;
     }
-    return square;
+    return cuadro;
 }
 
-void printMatrix(vector<vector<int>>& square, int n) {
-    cout << "Magic square " << n << "x" << n << ":" << endl;
+void printMatrix(vector<vector<int>>& cuadro, int n) {
+    cout << "Cuadro Magico " << n << "x" << n << ":" << endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << square[i][j] << "\t";
+            cout << cuadro[i][j] << "\t";
         }
         cout << endl;
     }
 
     for (int i = 0; i < n; i++) {
-        int rowSum = 0;
-        int colSum = 0;
+        int SumFila = 0;
+        int SumCol = 0;
 
         for (int j = 0; j < n; j++) {
-            rowSum += square[i][j];
-            colSum += square[j][i];
+            SumFila += cuadro[i][j];
+            SumCol += cuadro[j][i];
         }
 
-        cout << "Row sum " << i + 1 << ": " << rowSum << endl;
-        cout << "Column sum " << i + 1 << ": " << colSum << endl;
+        cout << "Suma de la fila " << i + 1 << ": " << SumFila << endl;
+        cout << "Suma de la columna " << i + 1 << ": " << SumCol << endl;
     }
 
     int diagSum1 = 0;
     int diagSum2 = 0;
 
     for (int i = 0; i < n; i++) {
-        diagSum1 += square[i][i];
-        diagSum2 += square[i][n - i - 1];
+        diagSum1 += cuadro[i][i];
+        diagSum2 += cuadro[i][n - i - 1];
     }
 
-    cout << "Main diagonal sum: " << diagSum1 << endl;
-    cout << "Secondary diagonal sum: " << diagSum2 << endl;
+    cout << "Suma de la diagonal principal: " << diagSum1 << endl;
+    cout << "Suma de la diagonal secundaria: " << diagSum2 << endl;
 }
 
 int main() {
     int n;
+    cout << "Ingresa el tamano del cuadro" << endl;
     cin >> n;
 
     char m;
+    cout << "------MENU-----" << endl;
+    cout << "Opcion c para numeros consecutivos" << endl;
+    cout << "Opcion p para numeros pares" << endl;
+    cout << "Opcion i para numeros impares" << endl;
+    cout << "Opcion m para numeros multiplos de x" << endl;
+    cout << "Ingresa la opcion" << endl;
     cin >> m;
 
-    vector<vector<int>> square = generarCuadro(n, m);
+    vector<vector<int>> cuadro = generarCuadro(n, m);
 
-    // Print the magic square
-    printMatrix(square, n);
+    printMatrix(cuadro, n);
 
     return 0;
 }
