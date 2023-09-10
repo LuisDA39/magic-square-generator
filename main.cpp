@@ -3,65 +3,121 @@
 
 using namespace std;
 
-void generarCuadro(int n) {
+vector<vector<int>> generarCuadro(int n, char m) {
     vector<vector<int>> square(n, vector<int>(n, 0));
     // Fill the magic square
     int row = 0;
     int col = n / 2;
 
-    for (int i = 1; i < 1 + n * n; i++) {
-        square[row][col] = i;
+    int x;
 
-        row--;
-        col++;
+    switch(m) {
+        case 'c':
+            for (int i = 1; i < 1 + n * n; i++) {
+                square[row][col] = i;
+                row--;
+                col++;
 
-        if (row < 0) {
-            row = n - 1;
-        }
-        if (col == n) {
-            col = 0;
-        }
+                if (row < 0)
+                    row = n - 1;
+                if (col == n)
+                    col = 0;
 
-        if (square[row][col] != 0) {
-            row += 2;
-            col--;
-
-            if (row >= n) {
-                row -= n;
+                if (square[row][col] != 0) {
+                    row += 2;
+                    col--;
+                    if (row >= n)
+                        row -= n;
+                    if (col < 0)
+                        col = n - 1;
+                }
             }
-            if (col < 0) {
-                col = n - 1;
+            break;
+
+        case 'p':
+            for (int i = 1; i < 1 + n * n; i++) {
+                square[row][col] = 2 * i;
+                row--;
+                col++;
+
+                if (row < 0)
+                    row = n - 1;
+                if (col == n)
+                    col = 0;
+
+                if (square[row][col] != 0) {
+                    row += 2;
+                    col--;
+                    if (row >= n)
+                        row -= n;
+                    if (col < 0)
+                        col = n - 1;
+                }
             }
-        }
+            break;
+
+        case 'i':
+            for (int i = 1; i < 2*(n * n); i += 2) {
+                square[row][col] = i;
+
+                row--;
+                col++;
+
+                if (row < 0)
+                    row = n - 1;
+                if (col == n)
+                    col = 0;
+
+                if (square[row][col] != 0) {
+                    row += 2;
+                    col--;
+                    if (row >= n)
+                        row -= n;
+                    if (col < 0)
+                        col = n - 1;
+                }
+            }
+            break;
+
+        case 'm':
+            cin >> x;
+
+            for (int i = 1; i < 1 + n * n; i++) {
+                square[row][col] = i * x;
+                row--;
+                col++;
+
+                if (row < 0)
+                    row = n - 1;
+                if (col == n)
+                    col = 0;
+
+                if (square[row][col] != 0) {
+                    row += 2;
+                    col--;
+                    if (row >= n)
+                        row -= n;
+                    if (col < 0)
+                        col = n - 1;
+                }
+            }
+            break;
+
+        default:
+
+            break;
     }
+    return square;
 }
 
-
-
-
-
-void printMatrix(vector<vector<int>>& matrix, int n) {
+void printMatrix(vector<vector<int>>& square, int n) {
+    cout << "Magic square " << n << "x" << n << ":" << endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << matrix[i][j] << "\t";
+            cout << square[i][j] << "\t";
         }
         cout << endl;
     }
-}
-
-int main() {
-    int n;
-    cin >> n;
-
-
-    int m;
-    cin >> m;
-
-
-
-    // Print the magic square
-    cout << "Magic square " << n << "x" << n << ":" << endl;
-    printMatrix(square, n);
 
     for (int i = 0; i < n; i++) {
         int rowSum = 0;
@@ -86,6 +142,19 @@ int main() {
 
     cout << "Main diagonal sum: " << diagSum1 << endl;
     cout << "Secondary diagonal sum: " << diagSum2 << endl;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    char m;
+    cin >> m;
+
+    vector<vector<int>> square = generarCuadro(n, m);
+
+    // Print the magic square
+    printMatrix(square, n);
 
     return 0;
 }
