@@ -1,5 +1,10 @@
 # Magic Square Generator
 
+## Authors
+- [@LuisDA39](https://github.com/LuisDA39)
+- [@Nemesis1174](https://github.com/Nemesis1174)
+- [@samir-bstb](https://github.com/samir-bstb)
+
 This repository contains a C++ program that generates magic squares of odd sizes. Magic squares are matrices where the sum of numbers in each row, each column, and both diagonals are equal. The program offers different methods to fill the square based on user-selected options.
 
 ## Overview
